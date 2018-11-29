@@ -32,6 +32,20 @@ public class SettingActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        
+        String name;
+        int gender; // -1 = default, 1 = male, 0 = female
+        name = sharedPreferences.getString(getString(R.string.user_name), getString(R.string.no_name));
+        gender = sharedPreferences.getInt(getString(R.string.user_gender), -1);
+
+        editTextName.setText(name);
+        if(gender == 1){
+            radioButtonMale.setChecked(true);
+            imageViewProfile.setImageResource(R.drawable.male);
+        } else if (gender == 0){
+            radioButtonFemale.setChecked(true);
+            imageViewProfile.setImageResource(R.drawable.female);
+        } else {
+            imageViewProfile.setImageResource(R.drawable.profile);
+        }
     }
 }
