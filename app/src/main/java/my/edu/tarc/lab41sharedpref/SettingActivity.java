@@ -38,14 +38,35 @@ public class SettingActivity extends AppCompatActivity {
         gender = sharedPreferences.getInt(getString(R.string.user_gender), -1);
 
         editTextName.setText(name);
-        if(gender == 1){
+        if (gender == 1) {
             radioButtonMale.setChecked(true);
             imageViewProfile.setImageResource(R.drawable.male);
-        } else if (gender == 0){
+        } else if (gender == 0) {
             radioButtonFemale.setChecked(true);
             imageViewProfile.setImageResource(R.drawable.female);
         } else {
             imageViewProfile.setImageResource(R.drawable.profile);
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // 1. Create a SharedPref editor
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        // 2. Edit te SharedPref file
+        String name;
+        int gender;
+        name = editTextName.getText().toString();
+        editor.putString(getString(R.string.user_name), name);
+
+        gender = radioGroupGender.getCheckedRadioButtonId();
+        if (gender == R.id.radioButtonMale) {
+            editor.putInt(getString(R.string.user_gender), 1);
+        } else if (gender == R.id.radioButtonFemale) {
+            editor.putInt(getString(R.string.user_gender), 0);
+        }
+
+        editor.commit();
     }
 }
